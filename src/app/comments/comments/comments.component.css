@@ -1,0 +1,11 @@
+.close{
+  cursor: pointer;
+  color:darkred;
+  /* align-self: flex-start; */
+}
+.text {
+  font-size: 14px;
+}
+.date{
+  font-size: 12px;
+}

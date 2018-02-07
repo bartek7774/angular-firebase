@@ -1,0 +1,55 @@
+<ng-template #noDog>
+  <app-loading *ngIf="loading"></app-loading>
+  <app-error *ngIf="error"></app-error>
+</ng-template>
+
+<div *ngIf="dog$ | async; let dog; else noDog">
+  <h1 class="text-center">{{ getPageTitle(dog) }}</h1>
+  <div fxLayout="row wrap" fxLayoutAlign="space-between center" class="pt-2">
+    <div fxFill fxFlex="100" fxFlex.gt-xs="55">
+      <div class="dog-photo rounded mb-2 mb-sm-0" [style.backgroundImage]="getImgStyle(dog.image)"></div>
+    </div>
+    <div fxFlex="100" fxFlex.gt-xs="40" fxFlexFill class="mt-xs-3" [ngClass]="{'dog-description': activeMediaQuery }">
+      <p class="mt-xs-2 body-2">Group: {{ dog.group }}</p>
+      <mat-accordion>
+        <mat-expansion-panel>
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              <i class="material-icons">pets
+              </i>
+            </mat-panel-title>
+            <mat-panel-description>
+              <h4>Personality</h4>
+            </mat-panel-description>
+          </mat-expansion-panel-header>
+          <p>{{ dog.personality }}. </p>
+        </mat-expansion-panel>
+        <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              <i class="material-icons">sentiment_very_satisfied
+              </i>
+            </mat-panel-title>
+            <mat-panel-description>
+              <h4>Energy Level: </h4>
+            </mat-panel-description>
+          </mat-expansion-panel-header>
+          <p>{{ dog.energy }}. </p>
+        </mat-expansion-panel>
+      </mat-accordion>
+    </div>
+  </div>
+  <div fxLayout="row" class="row">
+    <div fxFlex="100" fxFlexFill>
+      <p class="mt-3" [innerHTML]="dog.description"></p>
+      <div fxLayout="row" fxLayoutAlign="space-between center">
+        <button mat-button color="primary" routerLink="/">&larr; Back</button>
+        <div fxLayout="row" fxLayoutAlign="center center">
+          <button mat-button color="primary" [disabled]="index===1" [routerLink]="['/dog', prev ]">&larr; Prev</button>
+          <button mat-button color="primary"  [disabled]="index===10" [routerLink]="['/dog', next ]">Next &rarr;</button>
+        </div>
+        <a class="btn btn-primary float-right" [href]="dog.link" target="_blank">{{ dog.breed }} AKC Info</a>
+      </div>
+    </div>
+  </div>
+</div>

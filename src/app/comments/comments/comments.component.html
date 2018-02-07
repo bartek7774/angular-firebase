@@ -1,0 +1,35 @@
+<section class="comments py-3">
+
+  <ng-template #noComments>
+    <p class="lead" *ngIf="loading">
+      <app-loading [inline]="true"></app-loading>Loading comments...
+    </p>
+    <app-error *ngIf="error"></app-error>
+  </ng-template>
+
+  <div *ngIf="comments$ | async; let commentsList; else noComments">
+    <mat-list class="mb-3">
+      <h3 matSubheader>Comments</h3>
+      <mat-list-item *ngFor="let comment of commentsList" class="pt-2">
+        <img matListAvatar [src]="comment.picture" alt="...">
+        <h3 matLine>  {{ comment.user }} </h3>
+        <p matLine>
+          <span class="text"> {{comment.text}} </span>
+          <span class="date"> -- {{comment.timestamp | date:'H:mm d/M/yy'}} </span>
+        </p>
+        <a fxFlexAlign="start" *ngIf="canDeleteComment(comment.uid)" class="close" title="Delete" (click)="deleteComment(comment.id);">&times;</a>
+      </mat-list-item>
+      <mat-divider></mat-divider>
+    </mat-list>
+    <div *ngIf="auth.loggedInFirebase; else logInToComment">
+      <app-comment-form (postComment)="onPostComment($event)"></app-comment-form>
+    </div>
+
+    <ng-template #logInToComment>
+      <p class="lead" *ngIf="!auth.loggedIn">
+        Please
+        <a (click)="auth.login()">log in</a> to leave a comment.
+      </p>
+    </ng-template>
+  </div>
+</section>

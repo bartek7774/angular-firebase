@@ -1,0 +1,33 @@
+<h1 class="text-center">{{ pageTitle }}</h1>
+
+<ng-template #noDogs>
+  <app-loading *ngIf="loading"></app-loading>
+  <app-error *ngIf="error"></app-error>
+</ng-template>
+
+<div *ngIf="dogsList$ | async; let dogsList; else noDogs">
+  <p class="my-3">
+    These were the top
+    <a href="http://www.akc.org/content/news/articles/the-labrador-retriever-wins-top-breed-for-the-26th-year-in-a-row/">10 most popular dog breeds in the United States in 2016</a>, ranked by the American Kennel Club (AKC).
+  </p>
+  <div fxLayout="row wrap" fxLayoutAlign="space-around center" class="mb-3">
+    <mat-card fxFlex="90" fxFlex.gt-xs="45" fxFlex.gt-sm="30" fxFlex.gt-md="22"  fxFlex.gt-lg="18"     *ngFor="let dog of dogsList" class="mb-2">
+        <img mat-card-image [src]="dog.image" [alt]="dog.breed">
+        <mat-card-content>
+            <h5>#{{ dog.rank }}: {{ dog.breed }}</h5>
+        </mat-card-content>
+        <mat-card-actions>
+          <button mat-button [routerLink]="['/dog', dog.rank]">Learn more</button>
+        </mat-card-actions>
+      </mat-card>
+
+  </div>
+</div>
+
+
+
+
+
+
+
+<app-comments></app-comments>

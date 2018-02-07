@@ -1,0 +1,20 @@
+<div fxLayout="row" fxLayoutAlign="space-between center" class="mt-2 mx-2 mb-3">
+  <div fxLayout="row" fxLayoutAlign="start center">
+    <strong class="mr-1">
+      <button  mat-button color="accent" routerLink="/">Popular Dogs ❤</button>
+    </strong>
+  </div>
+  <div class="ml-3">
+    <small *ngIf="auth.loading" class="loading">
+      Logging in...
+    </small>
+    <ng-template [ngIf]="!auth.loading">
+      <button *ngIf="!auth.loggedIn" mat-button color="primary" (click)="auth.login()">Log In</button>
+      <div fxLayout="row" fxLayoutAlign="start center" *ngIf="auth.loggedIn">
+        <img [src]="auth.userProfile.picture" class="mr-1">
+        <small>{{ auth.userProfile.name }}</small>
+        <button mat-button color="warn" class="ml-1" (click)="auth.logout()">Log Out</button>
+      </div>
+    </ng-template>
+  </div>
+</div>

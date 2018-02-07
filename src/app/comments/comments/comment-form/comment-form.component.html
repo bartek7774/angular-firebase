@@ -1,0 +1,8 @@
+<form (ngSubmit)="onSubmit()" fxLayout="column" fxFlexOffset="10" fxFlex="80" fxLayoutAlign="center center" #tplForm="ngForm" class="mt-2">
+  <mat-form-field fxFlexFill hintLabel="Max 100 characters">
+    <input matInput name="text" #input [(ngModel)]="commentForm.text" maxlength="100" placeholder="Leave a comment">
+    <mat-hint align="end">{{input.value?.length || 0}}/100</mat-hint>
+  </mat-form-field>
+  <button mat-button color="primary" class="ml-sm-2" [disabled]="!tplForm.valid">Send</button>
+</form>
+
